@@ -1,0 +1,10 @@
+{
+    "components": {
+        "location": "local",
+        "default-vendor": "site"
+    },
+    "modules": {
+        "location": "local",
+        "default-vendor": "site"
+    }
+}
