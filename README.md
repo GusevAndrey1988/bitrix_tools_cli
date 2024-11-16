@@ -3,7 +3,7 @@
 ## Доступные команды
 Создание файла с конфигурацией по умолчанию:
 ```bash
-bx-tools default-config
+$ bx-tools default-config
 ```
 
 Генерация компонента
