@@ -2,13 +2,14 @@
 #include <filesystem>
 #include <exception>
 
+#include "command_manager.h"
+
+#include "commands/create_default_config_cmd.h"
+
 std::filesystem::path get_data_path();
 std::filesystem::path get_templates_path();
 
 void print_help();
-void make_default_config();
-void make_component();
-void make_module();
 
 int main(int argc, char *argv[])
 {
@@ -17,22 +18,20 @@ int main(int argc, char *argv[])
         return EXIT_SUCCESS;
     }
 
+    const std::filesystem::path template_name = "default_config.template";
+    const auto path_to_template = get_templates_path() /= template_name;
+
+    std::shared_ptr<CommandManager> command_manager = std::make_shared<CommandManager>();
+    command_manager->registerFactory("default-config", CommandFactory::CommandFactoryPtr(
+            new CreateDefaultConfigCmdFactory(path_to_template)));
+
     std::string command = argv[1];
 
-    if (command == "default-config") {
-        const std::filesystem::path template_name = "default-config.template";
-        const auto path_to_template = get_templates_path() /= template_name;
+    if (command_manager->execute(command)) {
+        return EXIT_SUCCESS;
+    }
 
-        if (!std::filesystem::is_regular_file(path_to_template)) {
-            throw std::runtime_error("Не найден шаблон");
-        }
-
-        std::filesystem::copy_file(path_to_template,
-                std::filesystem::current_path() /=
-                        (template_name.stem().string() + ".json"));
-
-        std::cout << "default-config" << std::endl;
-    } else if (command == "make:component") {
+    if (command == "make:component") {
         std::cout << "make:component" << std::endl;
     } else if (command == "make:module") {
         std::cout << "make:module" << std::endl;

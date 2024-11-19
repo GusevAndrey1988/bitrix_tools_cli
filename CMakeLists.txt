@@ -14,13 +14,13 @@ FetchContent_MakeAvailable(json)
 add_executable(bitrix_tools_cli)
 
 target_sources(bitrix_tools_cli
-    PUBLIC
-        "${PROJECT_SOURCE_DIR}/src/main.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/main.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/command_manager.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/commands/create_default_config_cmd.cpp"
 )
 
 target_include_directories(bitrix_tools_cli
-    PUBLIC
-        "${PROJECT_SOURCE_DIR}/headers"
+    PUBLIC "${PROJECT_SOURCE_DIR}/headers"
 )
 
 target_link_libraries(bitrix_tools_cli
