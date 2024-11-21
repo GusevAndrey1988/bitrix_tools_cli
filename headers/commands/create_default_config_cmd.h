@@ -13,8 +13,6 @@ class CreateDefaultConfigCmd : public Command {
         void execute() override;
 
     private:
-        static const std::string FILE_NAME;
-
         std::filesystem::path path_to_template_;
 
         std::filesystem::path getPathToTemplate() const;

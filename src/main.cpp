@@ -5,6 +5,7 @@
 #include "command_manager.h"
 
 #include "commands/create_default_config_cmd.h"
+#include "commands/generate_component_cmd.h"
 
 std::filesystem::path get_data_path();
 std::filesystem::path get_templates_path();
@@ -18,12 +19,15 @@ int main(int argc, char *argv[])
         return EXIT_SUCCESS;
     }
 
-    const std::filesystem::path template_name = "default_config.template";
-    const auto path_to_template = get_templates_path() /= template_name;
-
     std::shared_ptr<CommandManager> command_manager = std::make_shared<CommandManager>();
+
+    const std::filesystem::path template_name = "default-config.json.template";
+    const auto path_to_template = get_templates_path() /= template_name;
     command_manager->registerFactory("default-config", CommandFactory::CommandFactoryPtr(
             new CreateDefaultConfigCmdFactory(path_to_template)));
+
+    command_manager->registerFactory("make:component", CommandFactory::CommandFactoryPtr(
+            new GenerateComponentCmdFactory(get_templates_path() /= "component")));
 
     std::string command = argv[1];
 
