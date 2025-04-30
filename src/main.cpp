@@ -1,7 +1,10 @@
 #include <iostream>
 #include <filesystem>
 #include <exception>
+#include <vector>
+#include <string>
 
+#include "config.h"
 #include "command_manager.h"
 
 #include "commands/create_default_config_cmd.h"
@@ -10,18 +13,38 @@
 std::filesystem::path get_data_path();
 std::filesystem::path get_templates_path();
 
-void print_help();
-
 int main(int argc, char *argv[])
 {
-    if (argc < 2) {
-        print_help();
-        return EXIT_SUCCESS;
+    using namespace std;
+
+    auto args = vector<string>();
+    for (int i = 0; i < argc; ++i) {
+        args.push_back(string(argv[i]));
     }
 
-    std::shared_ptr<CommandManager> command_manager = std::make_shared<CommandManager>();
+    Config config = Config(args);
 
-    const std::filesystem::path template_name = "default-config.json.template";
+    auto bitrix_tools_json_status = filesystem::status(
+        config.getRootPath() + config.getBitrixToolsJsonFileName());
+
+    if (bitrix_tools_json_status.type() == filesystem::file_type::not_found) {
+        cout
+            << "Файл \""
+            << config.getBitrixToolsJsonFileName()
+            << "\" не найден. Выполните команду init."
+            << endl;
+    }
+
+    shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
+
+    // todo: добавить зависимость Config в Command
+    // todo: подобрать библиотеку для шаблонизации json и php
+    // todo: реализовать команду init
+    // todo: добавить namespaces
+    // todo: добавить класс Application
+    // ...
+
+    const filesystem::path template_name = "default-config.json.template";
     const auto path_to_template = get_templates_path() /= template_name;
     command_manager->registerFactory("init", CommandFactory::CommandFactoryPtr(
             new CreateDefaultConfigCmdFactory(path_to_template)));
@@ -29,7 +52,7 @@ int main(int argc, char *argv[])
     command_manager->registerFactory("make:component", CommandFactory::CommandFactoryPtr(
             new GenerateComponentCmdFactory(get_templates_path() /= "component")));
 
-    std::string command = argv[1];
+    string command = argv[1];
 
     if (command_manager->execute(command)) {
         return EXIT_SUCCESS;
@@ -60,15 +83,4 @@ std::filesystem::path get_templates_path()
     }
 
     return path_to_templates;
-}
-
-void print_help()
-{
-    std::cout << "default-config\t" 
-            << "Создаёт файл конфигурации по умолчанию" << std::endl;
-
-    std::cout << "make:component\t"
-            << "Генерация компонента" << std::endl;
-
-    std::cout << "make:module\t" <<"Генерация модуля" << std::endl;
 }

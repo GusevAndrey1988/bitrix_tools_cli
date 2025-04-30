@@ -1,0 +1,7 @@
+{
+    "default-vendor": "vendor",
+
+    "default-module-location": "local",
+    "default-component-location": "local",
+    "default-js-extension-location": "local"
+}

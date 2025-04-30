@@ -12,6 +12,7 @@ FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download
 FetchContent_MakeAvailable(json)
 
 file(COPY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+file(COPY "${PROJECT_SOURCE_DIR}/config" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 
 add_executable(bitrix_tools_cli)
 
@@ -19,6 +20,7 @@ target_sources(bitrix_tools_cli
     PUBLIC "${PROJECT_SOURCE_DIR}/src/main.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command_manager.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/template.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/config.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/commands/create_default_config_cmd.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/commands/generate_component_cmd.cpp"
 )
