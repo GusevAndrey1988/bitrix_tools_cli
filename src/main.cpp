@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
     const std::filesystem::path template_name = "default-config.json.template";
     const auto path_to_template = get_templates_path() /= template_name;
-    command_manager->registerFactory("default-config", CommandFactory::CommandFactoryPtr(
+    command_manager->registerFactory("init", CommandFactory::CommandFactoryPtr(
             new CreateDefaultConfigCmdFactory(path_to_template)));
 
     command_manager->registerFactory("make:component", CommandFactory::CommandFactoryPtr(
@@ -33,14 +33,6 @@ int main(int argc, char *argv[])
 
     if (command_manager->execute(command)) {
         return EXIT_SUCCESS;
-    }
-
-    if (command == "make:component") {
-        std::cout << "make:component" << std::endl;
-    } else if (command == "make:module") {
-        std::cout << "make:module" << std::endl;
-    } else {
-        std::cout << "Неизвестная команда" << std::endl;
     }
 }
 
