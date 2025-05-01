@@ -6,13 +6,16 @@
 
 #include "command_factory.h"
 
-class CommandManager {
+namespace bitrix_tools
+{
+    class CommandManager
+    {
     public:
         using CommandFactoryMap = std::map<std::string,
-                CommandFactory::CommandFactoryPtr>;
+                                        CommandFactory::CommandFactoryPtr>;
 
         void registerFactory(const std::string &command_name,
-                CommandFactory::CommandFactoryPtr factory);
+                            CommandFactory::CommandFactoryPtr factory);
 
         /**
          * @return true if the command was executed, false otherwise
@@ -21,4 +24,5 @@ class CommandManager {
 
     private:
         CommandFactoryMap command_factory_map_;
-};
+    }; 
+}

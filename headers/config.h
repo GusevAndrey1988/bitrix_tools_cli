@@ -3,13 +3,16 @@
 #include <string>
 #include <vector>
 
-class Config {
+namespace bitrix_tools
+{
+    class Config
+    {
     public:
-        Config(const Config&) = delete;
-    
+        Config(const Config &) = delete;
+
         explicit Config(const std::vector<std::string> &args);
 
-        Config operator=(const Config&) = delete;
+        Config operator=(const Config &) = delete;
 
         const std::string getRootPath() const;
         const std::string getConfigPath() const;
@@ -20,5 +23,5 @@ class Config {
 
     private:
         std::string app_path_;
-
-};
+    };
+}

@@ -2,20 +2,23 @@
 
 #include <iostream>
 
-InitCmd::InitCmd(const Config &config) : Command(config)
+namespace bitrix_tools
 {
-}
+    InitCmd::InitCmd(const Config &config) : Command(config)
+    {
+    }
 
-void InitCmd::execute()
-{
-    std::cout << "run init cmd" << std::endl;
-}
+    void InitCmd::execute()
+    {
+        std::cout << "run init cmd" << std::endl;
+    }
 
-InitCmdFactory::InitCmdFactory(const Config &config) : CommandFactory(config)
-{
-}
+    InitCmdFactory::InitCmdFactory(const Config &config) : CommandFactory(config)
+    {
+    }
 
-Command::CommandPtr InitCmdFactory::create()
-{
-    return Command::CommandPtr(new InitCmd(getConfig()));
+    Command::CommandPtr InitCmdFactory::create()
+    {
+        return Command::CommandPtr(new InitCmd(getConfig()));
+    }
 }

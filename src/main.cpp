@@ -12,9 +12,11 @@
 int main(int argc, char *argv[])
 {
     using namespace std;
+    using namespace bitrix_tools;
 
     auto args = vector<string>();
-    for (int i = 0; i < argc; ++i) {
+    for (int i = 0; i < argc; ++i)
+    {
         args.push_back(string(argv[i]));
     }
 
@@ -23,7 +25,8 @@ int main(int argc, char *argv[])
     auto bitrix_tools_json_status = filesystem::status(
         config.getRootPath() + config.getBitrixToolsJsonFileName());
 
-    if (bitrix_tools_json_status.type() == filesystem::file_type::not_found) {
+    if (bitrix_tools_json_status.type() == filesystem::file_type::not_found)
+    {
         cout
             << "Файл \""
             << config.getBitrixToolsJsonFileName()
@@ -34,16 +37,17 @@ int main(int argc, char *argv[])
     shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
 
     // todo: реализовать команду init
-    // todo: добавить namespaces
     // todo: добавить класс Application
     // ...
 
     command_manager->registerFactory("init", CommandFactory::CommandFactoryPtr(new InitCmdFactory(config)));
 
-    if (args.size() > 1) {
+    if (args.size() > 1)
+    {
         string command = args[1];
 
-        if (command_manager->execute(command)) {
+        if (command_manager->execute(command))
+        {
             return EXIT_SUCCESS;
         }
 

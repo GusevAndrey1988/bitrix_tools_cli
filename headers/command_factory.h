@@ -5,7 +5,10 @@
 #include "command.h"
 #include "config.h"
 
-class CommandFactory {
+namespace bitrix_tools
+{
+    class CommandFactory
+    {
     public:
         using CommandFactoryPtr = std::shared_ptr<CommandFactory>;
 
@@ -16,8 +19,9 @@ class CommandFactory {
         virtual Command::CommandPtr create() = 0;
 
     protected:
-        const Config& getConfig() const;
+        const Config &getConfig() const;
 
     private:
         const Config &config_;
-};
+    };
+}

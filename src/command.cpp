@@ -1,10 +1,13 @@
 #include "command.h"
 
-Command::Command(const Config &config) : config_(config)
+namespace bitrix_tools
 {
-}
+    Command::Command(const Config &config) : config_(config)
+    {
+    }
 
-const Config& Command::getConfig() const
-{
-    return config_;
+    const Config &Command::getConfig() const
+    {
+        return config_;
+    }
 }

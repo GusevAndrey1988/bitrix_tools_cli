@@ -4,7 +4,10 @@
 
 #include "config.h"
 
-class Command {
+namespace bitrix_tools
+{
+    class Command
+    {
     public:
         using CommandPtr = std::unique_ptr<Command>;
 
@@ -15,8 +18,9 @@ class Command {
         virtual void execute() = 0;
 
     protected:
-        const Config& getConfig() const;
+        const Config &getConfig() const;
 
     private:
         const Config &config_;
-};
+    };
+}

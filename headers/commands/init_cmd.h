@@ -7,14 +7,18 @@
 #include <string>
 #include <filesystem>
 
-class InitCmd : public Command {
+namespace bitrix_tools
+{
+    class InitCmd : public Command
+    {
     public:
         explicit InitCmd(const Config &config);
 
         void execute() override;
-};
+    };
 
-class InitCmdFactory : public CommandFactory {
+    class InitCmdFactory : public CommandFactory
+    {
     public:
         explicit InitCmdFactory(const Config &config);
 
@@ -22,4 +26,5 @@ class InitCmdFactory : public CommandFactory {
 
     private:
         std::filesystem::path path_to_template_;
-};
+    };
+}
