@@ -12,6 +12,9 @@ namespace bitrix_tools
     public:
         explicit Application(const std::vector<std::string> &args);
 
+        Application(const Application &) = delete;
+        Application& operator=(const Application &) = delete;
+
         int run();
     
     private:

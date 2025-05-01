@@ -12,7 +12,7 @@ namespace bitrix_tools
 
         Config(const Config &) = delete;
 
-        Config operator=(const Config &) = delete;
+        Config& operator=(const Config &) = delete;
 
         const std::string getRootPath() const;
         const std::string getConfigPath() const;
