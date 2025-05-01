@@ -24,7 +24,6 @@ add_executable(bitrix_tools_cli)
 target_sources(bitrix_tools_cli
     PUBLIC "${PROJECT_SOURCE_DIR}/src/main.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command_manager.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/template.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/config.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command_factory.cpp"
