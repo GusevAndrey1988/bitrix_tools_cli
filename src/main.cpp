@@ -7,11 +7,7 @@
 #include "config.h"
 #include "command_manager.h"
 
-#include "commands/create_default_config_cmd.h"
-#include "commands/generate_component_cmd.h"
-
-std::filesystem::path get_data_path();
-std::filesystem::path get_templates_path();
+#include "commands/init_cmd.h"
 
 int main(int argc, char *argv[])
 {
@@ -37,49 +33,20 @@ int main(int argc, char *argv[])
 
     shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
 
-    // todo: добавить зависимость Config в Command
     // todo: реализовать команду init
     // todo: добавить namespaces
     // todo: добавить класс Application
     // ...
 
-    const filesystem::path template_name = "default-config.json.template";
-    const auto path_to_template = get_templates_path() /= template_name;
-    command_manager->registerFactory("init", CommandFactory::CommandFactoryPtr(
-            new CreateDefaultConfigCmdFactory(path_to_template)));
+    command_manager->registerFactory("init", CommandFactory::CommandFactoryPtr(new InitCmdFactory(config)));
 
-    command_manager->registerFactory("make:component", CommandFactory::CommandFactoryPtr(
-            new GenerateComponentCmdFactory(get_templates_path() /= "component")));
+    if (args.size() > 1) {
+        string command = args[1];
 
-    string command = argv[1];
+        if (command_manager->execute(command)) {
+            return EXIT_SUCCESS;
+        }
 
-    if (command_manager->execute(command)) {
         return EXIT_SUCCESS;
     }
-}
-
-std::filesystem::path get_data_path()
-{
-    const std::filesystem::path app_data_path =
-            std::filesystem::read_symlink("/proc/self/exe").parent_path() /= "data";
-        
-    if (std::filesystem::is_directory("/etc/bitrix_tools_cli")) {
-        return "/etc/bitrix_tools_cli";
-    } else if (std::filesystem::is_directory("/opt/bitrix_tools_cli")) {
-        return "/opt/bitrix_tools_cli";
-    } else if (std::filesystem::is_directory(app_data_path)) {
-        return app_data_path;
-    }
-
-    throw std::runtime_error("Не найдена папка с данными");
-}
-
-std::filesystem::path get_templates_path()
-{
-    const auto path_to_templates = get_data_path() /= "templates";
-    if (!std::filesystem::is_directory(path_to_templates)) {
-        throw std::runtime_error("Не найдена папка с шаблонами");
-    }
-
-    return path_to_templates;
 }

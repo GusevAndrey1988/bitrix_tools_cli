@@ -26,8 +26,9 @@ target_sources(bitrix_tools_cli
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command_manager.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/template.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/config.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/commands/create_default_config_cmd.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/commands/generate_component_cmd.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/command.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/command_factory.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/commands/init_cmd.cpp"
 )
 
 target_include_directories(bitrix_tools_cli

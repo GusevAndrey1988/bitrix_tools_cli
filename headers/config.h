@@ -3,8 +3,7 @@
 #include <string>
 #include <vector>
 
-class Config
-{
+class Config {
     public:
         Config(const Config&) = delete;
     
