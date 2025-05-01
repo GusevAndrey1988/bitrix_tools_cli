@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.30)
 
 set(CMAKE_C_COMPILER "clang")
 set(CMAKE_CXX_COMPILER "clang++")
-set(EXPORT_COMPILE_COMMANDS)
+set(EXPORT_COMPILE_COMMANDS ON)
 
 project(bitrix_tools_cli VERSION 0.0.1)
 
@@ -23,6 +23,7 @@ add_executable(bitrix_tools_cli)
 
 target_sources(bitrix_tools_cli
     PUBLIC "${PROJECT_SOURCE_DIR}/src/main.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/application.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command_manager.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/config.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command.cpp"

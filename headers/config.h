@@ -8,9 +8,9 @@ namespace bitrix_tools
     class Config
     {
     public:
-        Config(const Config &) = delete;
-
         explicit Config(const std::vector<std::string> &args);
+
+        Config(const Config &) = delete;
 
         Config operator=(const Config &) = delete;
 
