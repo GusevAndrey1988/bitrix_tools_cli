@@ -9,11 +9,16 @@ project(bitrix_tools_cli VERSION 0.0.1)
 include(FetchContent)
 
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
-FetchContent_MakeAvailable(json)
+FetchContent_Declare(
+    jinja2
+    GIT_REPOSITORY https://github.com/flexferrum/Jinja2Cpp.git
+    GIT_TAG e97a54e51336938470eacb4ce261bde903e22e54 # 1.3.2
+)
+FetchContent_MakeAvailable(json jinja2)
 
 file(COPY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(COPY "${PROJECT_SOURCE_DIR}/config" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-
+  
 add_executable(bitrix_tools_cli)
 
 target_sources(bitrix_tools_cli
@@ -32,4 +37,5 @@ target_include_directories(bitrix_tools_cli
 target_link_libraries(bitrix_tools_cli
     PRIVATE
         nlohmann_json::nlohmann_json
+        jinja2cpp
 )

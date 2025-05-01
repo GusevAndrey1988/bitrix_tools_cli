@@ -38,7 +38,6 @@ int main(int argc, char *argv[])
     shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
 
     // todo: добавить зависимость Config в Command
-    // todo: подобрать библиотеку для шаблонизации json и php
     // todo: реализовать команду init
     // todo: добавить namespaces
     // todo: добавить класс Application
