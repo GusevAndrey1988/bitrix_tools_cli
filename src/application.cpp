@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <filesystem>
+#include <algorithm>
 
 #include "application.h"
 
@@ -11,6 +12,8 @@
 #include "command_manager.h"
 
 #include "commands/init_cmd.h"
+
+#include "json_parser.h"
 
 namespace bitrix_tools
 {
@@ -33,8 +36,19 @@ namespace bitrix_tools
                 << endl;
         }
 
+        cout << "begin DEBUG (config.json) >>" << endl;
+        JsonParser config_json{config_.getConfigPath() + "config.json"};
+        auto config_json_props = config_json.getProps();
+        std::for_each(config_json_props.begin(), config_json_props.end(), [](auto prop) {
+           cout << prop.first << " -> " << prop.second << endl;
+        });
+        cout << "<< end DEBUG" << endl;
+
         shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
 
+        // todo: передача данных из json в Config
+        // todo: переименовать headers -> include
+        // todo: добавить шаблонизатор
         // todo: реализовать команду init
 
         command_manager->registerFactory("init", CommandFactory::CommandFactoryPtr(new InitCmdFactory(config_)));
