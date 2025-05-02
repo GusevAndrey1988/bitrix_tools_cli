@@ -15,8 +15,7 @@ namespace bitrix_tools
     namespace po = boost::program_options;
 
     Application::Application(int argc, const char *argv[])
-        : cmd_line_{"Доступные опции"}, argc_{argc}, argv_{argv}, config_{Config(argc, argv, JsonParser{})},
-          command_manager_{std::make_shared<CommandManager>()}
+        : cmd_line_{"Доступные опции"}, argc_{argc}, argv_{argv}, config_{Config(argc, argv, JsonParser{})}
     {
     }
 
@@ -53,33 +52,22 @@ namespace bitrix_tools
         //     return EXIT_SUCCESS;
         // }
 
-        initCommands();
-
         // todo: добавить шаблонизатор
         // todo: реализовать команду init
 
+        unique_ptr<Command> cmdPtr{};
+
         if (cmd_line_.variables.count(CMD_INIT))
         {
-            if (command_manager_->execute(CMD_INIT))
-            {
-            }
+            cmdPtr = make_unique<InitCmd>(config_);
         }
 
-        if (argc_ > 1)
+        if (cmdPtr)
         {
-            string command{argv_[1]};
-
-            if (command_manager_->execute(command))
-            {
-            }
+            cmdPtr->execute();
         }
 
         return EXIT_SUCCESS;
-    }
-
-    void Application::initCommands()
-    {
-        command_manager_->registerFactory(CMD_INIT, CommandFactory::CommandFactoryPtr(new InitCmdFactory(config_)));
     }
 
     bool Application::bitrixToolsJsonFileExists() const

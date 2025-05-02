@@ -12,13 +12,4 @@ namespace bitrix_tools
     {
         std::cout << "run init cmd" << std::endl;
     }
-
-    InitCmdFactory::InitCmdFactory(const Config &config) : CommandFactory(config)
-    {
-    }
-
-    Command::CommandPtr InitCmdFactory::create()
-    {
-        return Command::CommandPtr(new InitCmd(getConfig()));
-    }
 }

@@ -8,7 +8,6 @@
 #include <boost/program_options/options_description.hpp>
 
 #include "config.h"
-#include "command_manager.h"
 
 namespace bitrix_tools
 {
@@ -23,8 +22,6 @@ namespace bitrix_tools
         int run();
     
     private:
-        void initCommands();
-
         bool bitrixToolsJsonFileExists() const;
 
         struct CmdLine
@@ -42,8 +39,6 @@ namespace bitrix_tools
         const char **argv_;
 
         const Config config_;
-
-        std::shared_ptr<CommandManager> command_manager_;
     };
 
     constexpr char CMD_HELP[] = "help";
