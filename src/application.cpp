@@ -5,13 +5,9 @@
 #include <filesystem>
 
 #include "application.h"
-
 #include "config.h"
-
 #include "command_manager.h"
-
 #include "commands/init_cmd.h"
-
 #include "json_parser.h"
 
 namespace bitrix_tools
@@ -39,7 +35,7 @@ namespace bitrix_tools
 
         shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
 
-        // todo: переименовать headers -> include
+        // todo: подобрать библиотеку для интерактивного терминала
         // todo: добавить шаблонизатор
         // todo: реализовать команду init
 

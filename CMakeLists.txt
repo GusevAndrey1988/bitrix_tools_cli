@@ -18,23 +18,15 @@ FetchContent_MakeAvailable(json jinja2)
 
 file(COPY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(COPY "${PROJECT_SOURCE_DIR}/config" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-  
+
+file(GLOB_RECURSE SRC_FILES "${PROJECT_SOURCE_DIR}/src/*.cpp")
+
 add_executable(bitrix_tools_cli)
 
-target_sources(bitrix_tools_cli
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/main.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/application.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/command_manager.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/work_location.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/config.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/json_parser.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/command.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/command_factory.cpp"
-    PUBLIC "${PROJECT_SOURCE_DIR}/src/commands/init_cmd.cpp"
-)
+target_sources(bitrix_tools_cli PUBLIC ${SRC_FILES})
 
 target_include_directories(bitrix_tools_cli
-    PUBLIC "${PROJECT_SOURCE_DIR}/headers"
+    PUBLIC "${PROJECT_SOURCE_DIR}/include"
 )
 
 target_link_libraries(bitrix_tools_cli
