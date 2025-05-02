@@ -7,10 +7,10 @@ namespace bitrix_tools
     const std::string Config::MAIN_CONFIG_FILE_NAME = "config.json";
     const std::string Config::BITRIX_TOOLS_JSON_FILE_NAME = "bitrix-tools.json";
 
-    Config::Config(const std::vector<std::string> &args, const JsonParser &json_parser)
+    Config::Config(int argc, const char *argv[], const JsonParser &json_parser)
         : json_parser_{json_parser}
     {
-        app_path_ = args[0];
+        app_path_ = argv[0];
     }
 
     std::string Config::getRootPath() const

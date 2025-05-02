@@ -2,15 +2,20 @@
 
 #include <string>
 #include <vector>
+#include <memory>
+
+#include <boost/program_options/variables_map.hpp>
+#include <boost/program_options/options_description.hpp>
 
 #include "config.h"
+#include "command_manager.h"
 
 namespace bitrix_tools
 {
     class Application
     {
     public:
-        explicit Application(const std::vector<std::string> &args);
+        explicit Application(int argc, const char *argv[]);
 
         Application(const Application &) = delete;
         Application& operator=(const Application &) = delete;
@@ -18,9 +23,29 @@ namespace bitrix_tools
         int run();
     
     private:
+        void initCommands();
+
         bool bitrixToolsJsonFileExists() const;
 
-        const std::vector<std::string> &args_;
+        struct CmdLine
+        {
+            CmdLine(const std::string &caption);
+            
+            boost::program_options::options_description description;
+            boost::program_options::variables_map variables;
+        } cmd_line_;
+
+        void initCmdLine();
+        void parseCmdLine();
+
+        const int argc_;
+        const char **argv_;
+
         const Config config_;
+
+        std::shared_ptr<CommandManager> command_manager_;
     };
+
+    constexpr char CMD_HELP[] = "help";
+    constexpr char CMD_INIT[] = "init";
 }

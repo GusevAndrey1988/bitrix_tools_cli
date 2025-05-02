@@ -11,7 +11,7 @@ namespace bitrix_tools
     class Config
     {
     public:
-        explicit Config(const std::vector<std::string> &args, const JsonParser &json_parser);
+        explicit Config(int argc, const char *argv[], const JsonParser &json_parser);
 
         Config(const Config &) = delete;
 

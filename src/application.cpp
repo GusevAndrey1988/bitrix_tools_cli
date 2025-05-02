@@ -3,17 +3,20 @@
 #include <string>
 #include <memory>
 #include <filesystem>
+#include <algorithm>
+#include <boost/program_options.hpp>
 
 #include "application.h"
-#include "config.h"
-#include "command_manager.h"
 #include "commands/init_cmd.h"
 #include "json_parser.h"
 
 namespace bitrix_tools
 {
-    Application::Application(const std::vector<std::string> &args)
-        : config_(Config(args, JsonParser{})), args_(args)
+    namespace po = boost::program_options;
+
+    Application::Application(int argc, const char *argv[])
+        : cmd_line_{"Доступные опции"}, argc_{argc}, argv_{argv}, config_{Config(argc, argv, JsonParser{})},
+          command_manager_{std::make_shared<CommandManager>()}
     {
     }
 
@@ -22,35 +25,61 @@ namespace bitrix_tools
         using namespace std;
         using namespace bitrix_tools;
 
-        if (!bitrixToolsJsonFileExists())
-        {
-            cout
-                << "Файл "
-                << "\"" << config_.getBitrixToolsJsonFileName() << "\""
-                << " не найден. Выполните команду init."
-                << endl;
+        initCmdLine();
 
-            return EXIT_SUCCESS;
+        try
+        {
+            parseCmdLine();
+        }
+        catch (const boost::wrapexcept<boost::program_options::unknown_option> &e)
+        {
+            cout << "Неизвестная опиция: " << e.get_option_name() << endl;
+            return EXIT_FAILURE;
         }
 
-        shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
+        if (cmd_line_.variables.count(CMD_HELP))
+        {
+            cout << cmd_line_.description << endl;
+        }
 
-        // todo: подобрать библиотеку для интерактивного терминала
+        // if (!bitrixToolsJsonFileExists())
+        // {
+        //     cout
+        //         << "Файл "
+        //         << "\"" << config_.getBitrixToolsJsonFileName() << "\""
+        //         << " не найден. Выполните команду init."
+        //         << endl;
+
+        //     return EXIT_SUCCESS;
+        // }
+
+        initCommands();
+
         // todo: добавить шаблонизатор
         // todo: реализовать команду init
 
-        command_manager->registerFactory("init", CommandFactory::CommandFactoryPtr(new InitCmdFactory(config_)));
-
-        if (args_.size() > 1)
+        if (cmd_line_.variables.count(CMD_INIT))
         {
-            string command = args_[1];
+            if (command_manager_->execute(CMD_INIT))
+            {
+            }
+        }
 
-            if (command_manager->execute(command))
+        if (argc_ > 1)
+        {
+            string command{argv_[1]};
+
+            if (command_manager_->execute(command))
             {
             }
         }
 
         return EXIT_SUCCESS;
+    }
+
+    void Application::initCommands()
+    {
+        command_manager_->registerFactory(CMD_INIT, CommandFactory::CommandFactoryPtr(new InitCmdFactory(config_)));
     }
 
     bool Application::bitrixToolsJsonFileExists() const
@@ -61,5 +90,25 @@ namespace bitrix_tools
             config_.getRootPath() + config_.getBitrixToolsJsonFileName());
 
         return bitrix_tools_json_status.type() != filesystem::file_type::not_found;
+    }
+
+    void Application::initCmdLine()
+    {
+        cmd_line_.description.add_options()
+            (CMD_HELP, "выводит подсказку")
+            (CMD_INIT, (std::string{
+                "создаёт файл "
+                + config_.getBitrixToolsJsonFileName()
+                + " в текущем каталоге"}.c_str()));
+    }
+
+    void Application::parseCmdLine()
+    {
+        po::store(po::parse_command_line(argc_, argv_, cmd_line_.description), cmd_line_.variables);
+        po::notify(cmd_line_.variables);
+    }
+
+    Application::CmdLine::CmdLine(const std::string &caption) : description{caption}
+    {
     }
 }

@@ -14,7 +14,18 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/flexferrum/Jinja2Cpp.git
     GIT_TAG e97a54e51336938470eacb4ce261bde903e22e54 # 1.3.2
 )
-FetchContent_MakeAvailable(json jinja2)
+
+set(BOOST_INCLUDE_LIBRARIES program_options)
+set(BOOST_ENABLE_CMAKE ON)
+
+FetchContent_Declare(
+  Boost
+  GIT_REPOSITORY https://github.com/boostorg/boost.git
+  GIT_TAG 199ef13d6034c85232431130142159af3adfce22 # boost-1.88.0
+  GIT_SHALLOW TRUE
+)
+
+FetchContent_MakeAvailable(json jinja2 Boost)
 
 file(COPY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(COPY "${PROJECT_SOURCE_DIR}/config" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
@@ -33,4 +44,5 @@ target_link_libraries(bitrix_tools_cli
     PRIVATE
         nlohmann_json::nlohmann_json
         jinja2cpp
+        Boost::program_options
 )
