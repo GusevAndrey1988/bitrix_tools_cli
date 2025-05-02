@@ -25,6 +25,7 @@ target_sources(bitrix_tools_cli
     PUBLIC "${PROJECT_SOURCE_DIR}/src/main.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/application.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command_manager.cpp"
+    PUBLIC "${PROJECT_SOURCE_DIR}/src/work_location.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/config.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/json_parser.cpp"
     PUBLIC "${PROJECT_SOURCE_DIR}/src/command.cpp"

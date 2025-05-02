@@ -4,33 +4,99 @@
 
 namespace bitrix_tools
 {
-    Config::Config(const std::vector<std::string> &args)
+    const std::string Config::MAIN_CONFIG_FILE_NAME = "config.json";
+    const std::string Config::BITRIX_TOOLS_JSON_FILE_NAME = "bitrix-tools.json";
+
+    Config::Config(const std::vector<std::string> &args, const JsonParser &json_parser)
+        : json_parser_{json_parser}
     {
         app_path_ = args[0];
     }
 
-    const std::string Config::getRootPath() const
+    std::string Config::getRootPath() const
     {
         return std::filesystem::path(app_path_).remove_filename();
     }
 
-    const std::string Config::getConfigPath() const
+    std::string Config::getConfigPath() const
     {
-        return getRootPath() + "config/";
+        // todo
+        return "./config/";
     }
 
-    const std::string Config::getTemplatesPath() const
+    std::string Config::getTemplatesPath() const
     {
-        return getRootPath() + "data/";
+        // todo
+        return "./data/";
     }
 
-    const std::string Config::getBitrixToolsJsonFileName() const
+    std::string Config::getBitrixToolsJsonFileName() const
     {
-        return "bitrix-tools.json";
+        return BITRIX_TOOLS_JSON_FILE_NAME;
     }
 
-    const std::string Config::getPathToBitrixToolsJson() const
+    std::string Config::getPathToBitrixToolsJson() const
     {
         return getTemplatesPath() + getBitrixToolsJsonFileName();
+    }
+
+    void Config::parseJson()
+    {
+        props_ = json_parser_.parse(getConfigPath() + MAIN_CONFIG_FILE_NAME);
+    }
+
+    std::string Config::getPathToModuleDir(const WorkLocation &location, const std::string &vendor) const
+    {
+        return getRootPath() + work_location_to_string(location) + "/modules/" + vendor + "/";
+    }
+
+    std::string Config::getPathToComponentDir(const WorkLocation &location, const std::string &vendor) const
+    {
+        return getRootPath() + work_location_to_string(location) + "/components/" + vendor + "/";
+    }
+
+    std::string Config::getPathToJsExtensionDir(const WorkLocation &location, const std::string &vendor) const
+    {
+        return getRootPath() + work_location_to_string(location) + "/js/" + vendor + "/";
+    }
+
+    std::string Config::getDefaultVendorName() const
+    {
+        auto vendor = props_.find("default-vendor");
+        if (vendor == props_.end())
+        {
+            return "vendor";
+        }
+        return vendor->second;
+    }
+
+    WorkLocation Config::getDefaultModuleLocation() const
+    {
+        auto module_location = props_.find("default-module-location");
+        if (module_location == props_.end())
+        {
+            return WorkLocation::LOCAL;
+        }
+        return string_to_work_location(module_location->second);
+    }
+
+    WorkLocation Config::getDefaultComponentLocation() const
+    {
+        auto module_location = props_.find("default-component-location");
+        if (module_location == props_.end())
+        {
+            return WorkLocation::LOCAL;
+        }
+        return string_to_work_location(module_location->second);
+    }
+
+    WorkLocation Config::getDefaultJsExtensionLocation() const
+    {
+        auto js_extension_location = props_.find("default-js-extension-location");
+        if (js_extension_location == props_.end())
+        {
+            return WorkLocation::LOCAL;
+        }
+        return string_to_work_location(js_extension_location->second);
     }
 }

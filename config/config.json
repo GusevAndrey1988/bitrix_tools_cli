@@ -1,5 +1,5 @@
 {
-    "default-vendor": "vendor",
+    "default-vendor": "site",
 
     "default-module-location": "local",
     "default-component-location": "local",

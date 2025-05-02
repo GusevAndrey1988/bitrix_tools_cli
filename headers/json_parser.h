@@ -10,14 +10,12 @@ namespace bitrix_tools
     public:
         using PropsMap = std::unordered_map<std::string, const std::string>;
 
-        explicit JsonParser(const std::string &path_to_file);
+        explicit JsonParser();
 
-        JsonParser(const JsonParser &) = delete;
+        PropsMap parse(const std::string &path_to_file) const;
+
+        JsonParser(const JsonParser &) = default;
+
         JsonParser& operator=(const JsonParser &) = delete;
-
-        const PropsMap& getProps() const;
-    
-    private:
-        PropsMap props_;
     };
 }

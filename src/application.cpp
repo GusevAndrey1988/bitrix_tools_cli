@@ -3,7 +3,6 @@
 #include <string>
 #include <memory>
 #include <filesystem>
-#include <algorithm>
 
 #include "application.h"
 
@@ -18,7 +17,7 @@
 namespace bitrix_tools
 {
     Application::Application(const std::vector<std::string> &args)
-        : config_(Config(args)), args_(args)
+        : config_(Config(args, JsonParser{})), args_(args)
     {
     }
 
@@ -34,19 +33,12 @@ namespace bitrix_tools
                 << "\"" << config_.getBitrixToolsJsonFileName() << "\""
                 << " не найден. Выполните команду init."
                 << endl;
-        }
 
-        cout << "begin DEBUG (config.json) >>" << endl;
-        JsonParser config_json{config_.getConfigPath() + "config.json"};
-        auto config_json_props = config_json.getProps();
-        std::for_each(config_json_props.begin(), config_json_props.end(), [](auto prop) {
-           cout << prop.first << " -> " << prop.second << endl;
-        });
-        cout << "<< end DEBUG" << endl;
+            return EXIT_SUCCESS;
+        }
 
         shared_ptr<CommandManager> command_manager = make_shared<CommandManager>();
 
-        // todo: передача данных из json в Config
         // todo: переименовать headers -> include
         // todo: добавить шаблонизатор
         // todo: реализовать команду init

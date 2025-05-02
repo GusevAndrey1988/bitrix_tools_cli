@@ -7,7 +7,11 @@
 
 namespace bitrix_tools
 {
-    JsonParser::JsonParser(const std::string &path_to_file) : props_({})
+    JsonParser::JsonParser()
+    {
+    }
+
+    JsonParser::PropsMap JsonParser::parse(const std::string &path_to_file) const
     {
         using namespace nlohmann;
 
@@ -20,14 +24,13 @@ namespace bitrix_tools
 
         json config = json::parse(bitrix_tools_config_json);
 
+        PropsMap props{};
+
         for (auto prop : config.items())
         {
-            props_.insert({prop.key(), prop.value().dump()});
+            props.insert({prop.key(), prop.value().dump()});
         }
-    }
 
-    const JsonParser::PropsMap &JsonParser::getProps() const
-    {
-        return props_;
+        return props;
     }
 }
