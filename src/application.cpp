@@ -36,7 +36,7 @@ namespace bitrix_tools
             return EXIT_FAILURE;
         }
 
-        if (cmd_line_.variables.count(CMD_HELP))
+        if (cmd_line_.variables.count(CMD_HELP) || cmd_line_.variables.empty())
         {
             cout << cmd_line_.description << endl;
         }
