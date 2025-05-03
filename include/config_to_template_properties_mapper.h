@@ -1,0 +1,13 @@
+#pragma once
+
+#include "config.h"
+#include "template_property_value.h"
+
+namespace bitrix_tools
+{
+    class ConfigToTemplatePropertiesMapper
+    {
+    public:
+        static TemplatePropertyValueMap map(const Config &config);
+    };
+}

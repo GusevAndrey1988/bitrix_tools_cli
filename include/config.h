@@ -13,7 +13,7 @@ namespace bitrix_tools
     public:
         explicit Config(int argc, const char *argv[], const JsonParser &json_parser);
 
-        Config(const Config &) = delete;
+        Config(const Config &) = default;
 
         Config& operator=(const Config &) = delete;
 

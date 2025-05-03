@@ -41,29 +41,21 @@ namespace bitrix_tools
             cout << cmd_line_.description << endl;
         }
 
-        // if (!bitrixToolsJsonFileExists())
-        // {
-        //     cout
-        //         << "Файл "
-        //         << "\"" << config_.getBitrixToolsJsonFileName() << "\""
-        //         << " не найден. Выполните команду init."
-        //         << endl;
-
-        //     return EXIT_SUCCESS;
-        // }
-
-        // todo: реализовать команду init
-
-        unique_ptr<Command> cmdPtr{};
-
         if (cmd_line_.variables.count(CMD_INIT))
         {
-            cmdPtr = make_unique<InitCmd>(config_);
+            InitCmd cmd(config_);
+            cmd.execute();
         }
 
-        if (cmdPtr)
+        if (!bitrixToolsJsonFileExists())
         {
-            cmdPtr->execute();
+            cout
+                << "Файл "
+                << "\"" << config_.getBitrixToolsJsonFileName() << "\""
+                << " не найден. Выполните команду --init."
+                << endl;
+
+            return EXIT_SUCCESS;
         }
 
         return EXIT_SUCCESS;
