@@ -62,7 +62,7 @@ namespace bitrix_tools
 
     std::string Config::getDefaultVendorName() const
     {
-        auto vendor = props_.find("default-vendor");
+        auto vendor = props_.find("default_vendor");
         if (vendor == props_.end())
         {
             return "vendor";
@@ -72,7 +72,7 @@ namespace bitrix_tools
 
     WorkLocation Config::getDefaultModuleLocation() const
     {
-        auto module_location = props_.find("default-module-location");
+        auto module_location = props_.find("default_module_location");
         if (module_location == props_.end())
         {
             return WorkLocation::LOCAL;
@@ -82,7 +82,7 @@ namespace bitrix_tools
 
     WorkLocation Config::getDefaultComponentLocation() const
     {
-        auto module_location = props_.find("default-component-location");
+        auto module_location = props_.find("default_component_location");
         if (module_location == props_.end())
         {
             return WorkLocation::LOCAL;
@@ -92,7 +92,7 @@ namespace bitrix_tools
 
     WorkLocation Config::getDefaultJsExtensionLocation() const
     {
-        auto js_extension_location = props_.find("default-js-extension-location");
+        auto js_extension_location = props_.find("default_js_extension_location");
         if (js_extension_location == props_.end())
         {
             return WorkLocation::LOCAL;

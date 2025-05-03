@@ -1,7 +1,7 @@
 {
-    "default-vendor": "site",
+    "default_vendor": "site",
 
-    "default-module-location": "local",
-    "default-component-location": "local",
-    "default-js-extension-location": "local"
+    "default_module_location": "local",
+    "default_component_location": "local",
+    "default_js_extension_location": "local"
 }
