@@ -32,7 +32,7 @@ namespace bitrix_tools
         }
         catch (const boost::wrapexcept<boost::program_options::unknown_option> &e)
         {
-            cout << "Неизвестная опиция: " << e.get_option_name() << endl;
+            cout << "Неизвестная опция: " << e.get_option_name() << endl;
             return EXIT_FAILURE;
         }
 
@@ -52,7 +52,6 @@ namespace bitrix_tools
         //     return EXIT_SUCCESS;
         // }
 
-        // todo: добавить шаблонизатор
         // todo: реализовать команду init
 
         unique_ptr<Command> cmdPtr{};
