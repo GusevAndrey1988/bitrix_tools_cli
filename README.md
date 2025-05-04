@@ -1,17 +1,12 @@
 # Набор тулзов для Bitrix
 
 ## Доступные команды
-Создание файла с конфигурацией по умолчанию:
+Подсказка:
 ```bash
-$ bx-tools default-config
+$ bitrix_tools_cli --help
 ```
 
-Генерация компонента
+Создание файла с конфигурацией:
 ```bash
-$ bx-tools make:component
-```
-
-Генерация модуля
-```bash
-$ bx-tools make:module
+$ bitrix_tools_cli --init
 ```
