@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 namespace bitrix_tools
 {
@@ -11,7 +12,11 @@ namespace bitrix_tools
     {
     public:
         using TemplatePropertyValueMap = std::unordered_map<std::string, TemplatePropertyValue>;
+        using TemplatePropertyValueMapPtr = std::shared_ptr<TemplatePropertyValueMap>;
+
         using TemplatePropertyValueList = std::vector<TemplatePropertyValue>;
+        using TemplatePropertyValueListPtr = std::shared_ptr<TemplatePropertyValueList>;
+
 
         struct EmptyValue {};
 
@@ -21,8 +26,8 @@ namespace bitrix_tools
             std::string,
             int,
             double,
-            TemplatePropertyValueMap,
-            TemplatePropertyValueList
+            TemplatePropertyValueMapPtr,
+            TemplatePropertyValueListPtr
         >;
 
         TemplatePropertyValue(bool value);
@@ -33,9 +38,9 @@ namespace bitrix_tools
 
         TemplatePropertyValue(double value);
 
-        TemplatePropertyValue(const TemplatePropertyValueMap &value);
+        TemplatePropertyValue(TemplatePropertyValueMapPtr value);
 
-        TemplatePropertyValue(const TemplatePropertyValueList &value);
+        TemplatePropertyValue(TemplatePropertyValueListPtr value);
 
         bool isEmpty() const;
 
@@ -52,10 +57,10 @@ namespace bitrix_tools
         double asDouble() const;
 
         bool isMap() const;
-        const TemplatePropertyValueMap& asMap() const;
+        TemplatePropertyValueMapPtr asMap() const;
 
         bool isList() const;
-        const TemplatePropertyValueList& asList() const;
+        TemplatePropertyValueListPtr asList() const;
 
     private:
         ValueData value_;

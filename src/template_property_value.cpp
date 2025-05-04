@@ -18,12 +18,12 @@ namespace bitrix_tools
     {
     }
 
-    TemplatePropertyValue::TemplatePropertyValue(const TemplatePropertyValueMap &value)
+    TemplatePropertyValue::TemplatePropertyValue(TemplatePropertyValueMapPtr value)
         : value_{value}
     {
     }
 
-    TemplatePropertyValue::TemplatePropertyValue(const TemplatePropertyValueList &value)
+    TemplatePropertyValue::TemplatePropertyValue(TemplatePropertyValueListPtr value)
         : value_{value}
     {
     }
@@ -75,21 +75,21 @@ namespace bitrix_tools
 
     bool TemplatePropertyValue::isMap() const
     {
-        return std::holds_alternative<TemplatePropertyValue::TemplatePropertyValueMap>(value_);
+        return std::holds_alternative<TemplatePropertyValue::TemplatePropertyValueMapPtr>(value_);
     }
 
-    const TemplatePropertyValue::TemplatePropertyValueMap& TemplatePropertyValue::asMap() const
+    TemplatePropertyValue::TemplatePropertyValueMapPtr TemplatePropertyValue::asMap() const
     {
-        return std::get<TemplatePropertyValueMap>(value_);
+        return std::get<TemplatePropertyValueMapPtr>(value_);
     }
 
     bool TemplatePropertyValue::isList() const
     {
-        return std::holds_alternative<TemplatePropertyValue::TemplatePropertyValueList>(value_);
+        return std::holds_alternative<TemplatePropertyValue::TemplatePropertyValueListPtr>(value_);
     }
 
-    const TemplatePropertyValue::TemplatePropertyValueList& TemplatePropertyValue::asList() const
+    TemplatePropertyValue::TemplatePropertyValueListPtr TemplatePropertyValue::asList() const
     {
-        return std::get<TemplatePropertyValue::TemplatePropertyValueList>(value_);
+        return std::get<TemplatePropertyValue::TemplatePropertyValueListPtr>(value_);
     }
 }

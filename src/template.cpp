@@ -8,7 +8,7 @@ namespace bitrix_tools
     namespace j = jinja2;
 
     Template::Template(const std::string &path_to_template,
-        const TemplatePropertyValue::TemplatePropertyValueMap &props) : props_{props}
+        TemplatePropertyValue::TemplatePropertyValueMapPtr props) : props_{props}
     { 
         template_file_.open(path_to_template);
         if (!template_file_.is_open())
@@ -48,11 +48,11 @@ namespace bitrix_tools
         return true;
     }
 
-    j::ValuesMap Template::propsToJinjaProps(const TemplatePropertyValue::TemplatePropertyValueMap &props)
+    j::ValuesMap Template::propsToJinjaProps(TemplatePropertyValue::TemplatePropertyValueMapPtr props)
     {
         j::ValuesMap vm;
 
-        for (const auto &value : props)
+        for (const auto &value : *props)
         {
            vm.insert({value.first, Template::valueToJinjaValue(value.second)});
         }
@@ -91,7 +91,7 @@ namespace bitrix_tools
         {
             const auto &list = value.asList();
             j::ValuesList vl{};
-            std::transform(list.begin(), list.end(),
+            std::transform(list->begin(), list->end(),
                 std::back_insert_iterator(vl), Template::valueToJinjaValue);
 
             return vl;
@@ -101,7 +101,7 @@ namespace bitrix_tools
         {
             const auto &map = value.asMap();
             j::ValuesMap vm{};
-            std::transform(map.begin(), map.end(),
+            std::transform(map->begin(), map->end(),
                 std::inserter(vm, vm.begin()), [](const std::pair<std::string, TemplatePropertyValue> &p) {
                     return std::make_pair(p.first, Template::valueToJinjaValue(p.second));
                 });

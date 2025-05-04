@@ -8,6 +8,6 @@ namespace bitrix_tools
     class ConfigToTemplatePropertiesMapper
     {
     public:
-        static TemplatePropertyValue::TemplatePropertyValueMap map(const Config &config);
+        static TemplatePropertyValue::TemplatePropertyValueMapPtr map(const Config &config);
     };
 }
