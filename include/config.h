@@ -8,6 +8,8 @@
 
 #include "work_location.h"
 
+#include "generated/variables.h"
+
 namespace bitrix_tools
 {
     class Config
@@ -19,6 +21,7 @@ namespace bitrix_tools
 
         Config& operator=(const Config &) = delete;
 
+        std::string getBinaryPath() const;
         std::string getRootPath() const;
         std::string getConfigPath() const;
         std::string getTemplatesPath() const;
@@ -36,6 +39,11 @@ namespace bitrix_tools
         WorkLocation getDefaultJsExtensionLocation() const;
 
     private:
+        static std::filesystem::path getApplicationEtcDir()
+        {
+            return APPLICATION_ETC_DIR;
+        }
+
         void parseJson();
 
         template<typename T>

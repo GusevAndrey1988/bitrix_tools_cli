@@ -1,6 +1,5 @@
 #include "config.h"
 
-#include <iostream>
 #include <fstream>
 #include <filesystem>
 
@@ -16,21 +15,28 @@ namespace bitrix_tools
         app_path_ = argv[0];
     }
 
-    std::string Config::getRootPath() const
+    std::string Config::getBinaryPath() const
     {
         return std::filesystem::path(app_path_).remove_filename();
     }
 
+    std::string Config::getRootPath() const
+    {
+        return std::filesystem::current_path().string() + "/";
+    }
+
     std::string Config::getConfigPath() const
     {
-        // todo
-        return "./config/";
+        auto path = std::filesystem::path{getBinaryPath()}
+            /= getApplicationEtcDir() /= "config";
+        return path.string() + "/";
     }
 
     std::string Config::getTemplatesPath() const
     {
-        // todo
-        return "./templates/";
+        auto path = std::filesystem::path{getBinaryPath()}
+            /= getApplicationEtcDir() /= "templates";
+        return path.string() + "/";
     }
 
     std::string Config::getBitrixToolsJsonFileName() const

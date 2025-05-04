@@ -1,10 +1,19 @@
 cmake_minimum_required(VERSION 3.30)
 
-set(CMAKE_C_COMPILER "clang")
-set(CMAKE_CXX_COMPILER "clang++")
 set(EXPORT_COMPILE_COMMANDS ON)
 
 project(bitrix_tools_cli VERSION 0.0.1)
+
+set(BUILD_TYPE_DIR "release")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(BUILD_TYPE_DIR "debug")
+endif()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${BUILD_TYPE_DIR}/bin)
+
+set(APPLICATION_DIR "${CMAKE_PROJECT_NAME}")
+
+set(APPLICATION_ETC_DIR "../etc/${APPLICATION_DIR}")
 
 include(FetchContent)
 
@@ -22,13 +31,15 @@ FetchContent_Declare(
   Boost
   GIT_REPOSITORY https://github.com/boostorg/boost.git
   GIT_TAG 199ef13d6034c85232431130142159af3adfce22 # boost-1.88.0
-  GIT_SHALLOW TRUE
+  GIT_SHALLOW TRUE  
 )
 
 FetchContent_MakeAvailable(json jinja2 Boost)
 
-file(COPY "${PROJECT_SOURCE_DIR}/templates" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-file(COPY "${PROJECT_SOURCE_DIR}/config" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+file(COPY "${PROJECT_SOURCE_DIR}/resources/templates" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${APPLICATION_ETC_DIR}")
+file(COPY "${PROJECT_SOURCE_DIR}/resources/config" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${APPLICATION_ETC_DIR}")
+
+configure_file("${PROJECT_SOURCE_DIR}/config/variables.in" "${PROJECT_SOURCE_DIR}/include/generated/variables.h")
 
 file(GLOB_RECURSE SRC_FILES "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
@@ -48,5 +59,5 @@ target_link_libraries(bitrix_tools_cli
 )
 
 # /opt/bitrix_tools_cli/bin
-# /etc/opt/bitrix_tools_cli/config
-# /etc/opt/bitrix_tools_cli/templates
+# /opt/bitrix_tools_cli/etc/config
+# /opt/bitrix_tools_cli/etc/templates
