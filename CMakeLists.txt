@@ -9,7 +9,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 project(bitrix_tools_cli VERSION 0.0.1)
 
 set(BUILD_TYPE_DIR "release")
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(BUILD_TYPE_DIR "debug")
 endif()
 
@@ -21,7 +21,8 @@ set(APPLICATION_ETC_DIR "../etc/${APPLICATION_DIR}")
 
 include(FetchContent)
 
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
+find_package(nlohmann_json 3.11.3 REQUIRED)
+
 FetchContent_Declare(
     jinja2
     GIT_REPOSITORY https://github.com/flexferrum/Jinja2Cpp.git
@@ -32,10 +33,10 @@ set(BOOST_INCLUDE_LIBRARIES program_options)
 set(BOOST_ENABLE_CMAKE ON)
 
 FetchContent_Declare(
-  Boost
-  GIT_REPOSITORY https://github.com/boostorg/boost.git
-  GIT_TAG 199ef13d6034c85232431130142159af3adfce22 # boost-1.88.0
-  GIT_SHALLOW TRUE  
+    Boost
+    GIT_REPOSITORY https://github.com/boostorg/boost.git
+    GIT_TAG 199ef13d6034c85232431130142159af3adfce22 # boost-1.88.0
+    GIT_SHALLOW TRUE
 )
 
 FetchContent_MakeAvailable(json jinja2 Boost)
@@ -57,9 +58,9 @@ target_include_directories(bitrix_tools_cli
 
 target_link_libraries(bitrix_tools_cli
     PRIVATE
-        nlohmann_json::nlohmann_json
-        jinja2cpp
-        Boost::program_options
+    nlohmann_json::nlohmann_json
+    jinja2cpp
+    Boost::program_options
 )
 
 install(TARGETS bitrix_tools_cli DESTINATION "opt/bitrix_tools_cli/bin")
