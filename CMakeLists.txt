@@ -27,7 +27,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(json jinja2 Boost)
 
-file(COPY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+file(COPY "${PROJECT_SOURCE_DIR}/templates" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(COPY "${PROJECT_SOURCE_DIR}/config" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 
 file(GLOB_RECURSE SRC_FILES "${PROJECT_SOURCE_DIR}/src/*.cpp")
@@ -46,3 +46,7 @@ target_link_libraries(bitrix_tools_cli
         jinja2cpp
         Boost::program_options
 )
+
+# /opt/bitrix_tools_cli/bin
+# /etc/opt/bitrix_tools_cli/config
+# /etc/opt/bitrix_tools_cli/templates

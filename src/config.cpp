@@ -30,7 +30,7 @@ namespace bitrix_tools
     std::string Config::getTemplatesPath() const
     {
         // todo
-        return "./data/";
+        return "./templates/";
     }
 
     std::string Config::getBitrixToolsJsonFileName() const
