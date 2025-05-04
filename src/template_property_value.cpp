@@ -75,21 +75,21 @@ namespace bitrix_tools
 
     bool TemplatePropertyValue::isMap() const
     {
-        return std::holds_alternative<TemplatePropertyValueMap>(value_);
+        return std::holds_alternative<TemplatePropertyValue::TemplatePropertyValueMap>(value_);
     }
 
-    const TemplatePropertyValueMap& TemplatePropertyValue::asMap() const
+    const TemplatePropertyValue::TemplatePropertyValueMap& TemplatePropertyValue::asMap() const
     {
         return std::get<TemplatePropertyValueMap>(value_);
     }
 
     bool TemplatePropertyValue::isList() const
     {
-        return std::holds_alternative<TemplatePropertyValueList>(value_);
+        return std::holds_alternative<TemplatePropertyValue::TemplatePropertyValueList>(value_);
     }
 
-    const TemplatePropertyValueList& TemplatePropertyValue::asList() const
+    const TemplatePropertyValue::TemplatePropertyValueList& TemplatePropertyValue::asList() const
     {
-        return std::get<TemplatePropertyValueList>(value_);
+        return std::get<TemplatePropertyValue::TemplatePropertyValueList>(value_);
     }
 }

@@ -13,15 +13,15 @@ namespace bitrix_tools
     {
     public:
         explicit Template(const std::string &path_to_template,
-            const TemplatePropertyValueMap &props);
+            const TemplatePropertyValue::TemplatePropertyValueMap &props);
 
         bool saveTo(const std::string &file_name, bool override = false);
 
     private:
-        static jinja2::ValuesMap propsToJinjaProps(const TemplatePropertyValueMap &props);
+        static jinja2::ValuesMap propsToJinjaProps(const TemplatePropertyValue::TemplatePropertyValueMap &props);
         static jinja2::Value valueToJinjaValue(const TemplatePropertyValue &value);
 
         std::ifstream template_file_;
-        TemplatePropertyValueMap props_;
+        TemplatePropertyValue::TemplatePropertyValueMap props_;
     };
 }

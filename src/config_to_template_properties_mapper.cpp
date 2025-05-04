@@ -2,9 +2,9 @@
 
 namespace bitrix_tools
 {
-    TemplatePropertyValueMap ConfigToTemplatePropertiesMapper::map(const Config &config)
+    TemplatePropertyValue::TemplatePropertyValueMap ConfigToTemplatePropertiesMapper::map(const Config &config)
     {
-        TemplatePropertyValueMap vm{};
+        TemplatePropertyValue::TemplatePropertyValueMap vm{};
         
         vm.insert({"default_vendor", config.getDefaultVendorName()});
         vm.insert({"default_module_location", work_location_to_string(config.getDefaultModuleLocation())});

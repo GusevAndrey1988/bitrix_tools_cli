@@ -8,7 +8,7 @@ namespace bitrix_tools
     namespace j = jinja2;
 
     Template::Template(const std::string &path_to_template,
-        const TemplatePropertyValueMap &props) : props_{props}
+        const TemplatePropertyValue::TemplatePropertyValueMap &props) : props_{props}
     { 
         template_file_.open(path_to_template);
         if (!template_file_.is_open())
@@ -48,7 +48,7 @@ namespace bitrix_tools
         return true;
     }
 
-    j::ValuesMap Template::propsToJinjaProps(const TemplatePropertyValueMap &props)
+    j::ValuesMap Template::propsToJinjaProps(const TemplatePropertyValue::TemplatePropertyValueMap &props)
     {
         j::ValuesMap vm;
 

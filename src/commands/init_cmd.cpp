@@ -17,7 +17,7 @@ namespace bitrix_tools
 
         const std::string path_to_tpl = cfg.getTemplatesPath() + cfg.getBitrixToolsJsonFileName() + ".j2";
 
-        TemplatePropertyValueMap vm = ConfigToTemplatePropertiesMapper::map(cfg);
+        TemplatePropertyValue::TemplatePropertyValueMap vm = ConfigToTemplatePropertiesMapper::map(cfg);
         Template tpl{path_to_tpl, vm};
 
         if (tpl.saveTo(cfg.getRootPath() + cfg.getBitrixToolsJsonFileName()))
