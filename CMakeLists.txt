@@ -58,6 +58,5 @@ target_link_libraries(bitrix_tools_cli
         Boost::program_options
 )
 
-# /opt/bitrix_tools_cli/bin
-# /opt/bitrix_tools_cli/etc/config
-# /opt/bitrix_tools_cli/etc/templates
+install(TARGETS bitrix_tools_cli DESTINATION "opt/bitrix_tools_cli/bin")
+install(DIRECTORY resources/ DESTINATION "opt/bitrix_tools_cli/etc")
