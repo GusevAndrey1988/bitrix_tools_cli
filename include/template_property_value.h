@@ -14,7 +14,10 @@ namespace bitrix_tools
     class TemplatePropertyValue
     {
     public:
+        struct EmptyValue {};
+
         using ValueData = std::variant<
+            EmptyValue,
             bool,
             std::string,
             int,
@@ -34,6 +37,8 @@ namespace bitrix_tools
         TemplatePropertyValue(const TemplatePropertyValueMap &value);
 
         TemplatePropertyValue(const TemplatePropertyValueList &value);
+
+        bool isEmpty() const;
 
         bool isBool() const;
         bool asBool() const;

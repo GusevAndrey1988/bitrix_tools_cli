@@ -8,14 +8,13 @@
 
 #include "application.h"
 #include "commands/init_cmd.h"
-#include "json_parser.h"
 
 namespace bitrix_tools
 {
     namespace po = boost::program_options;
 
     Application::Application(int argc, const char *argv[])
-        : cmd_line_{"Доступные опции"}, argc_{argc}, argv_{argv}, config_{Config(argc, argv, JsonParser{})}
+        : cmd_line_{"Доступные опции"}, argc_{argc}, argv_{argv}, config_{Config(argc, argv)}
     {
     }
 

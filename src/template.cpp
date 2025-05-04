@@ -62,6 +62,11 @@ namespace bitrix_tools
 
     j::Value Template::valueToJinjaValue(const TemplatePropertyValue &value)
     {
+        if (value.isEmpty())
+        {
+            return j::Value(j::EmptyValue{});
+        }
+
         if (value.isBool())
         {
             return j::Value(value.asBool());

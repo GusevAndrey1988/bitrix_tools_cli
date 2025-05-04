@@ -28,6 +28,11 @@ namespace bitrix_tools
     {
     }
 
+    bool TemplatePropertyValue::isEmpty() const
+    {
+        return std::holds_alternative<EmptyValue>(value_);
+    }
+
     bool TemplatePropertyValue::isBool() const
     {
         return std::holds_alternative<bool>(value_);

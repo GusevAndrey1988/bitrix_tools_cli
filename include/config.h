@@ -2,8 +2,10 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 
-#include "json_parser.h"
+#include <nlohmann/json.hpp>
+
 #include "work_location.h"
 
 namespace bitrix_tools
@@ -11,7 +13,7 @@ namespace bitrix_tools
     class Config
     {
     public:
-        explicit Config(int argc, const char *argv[], const JsonParser &json_parser);
+        explicit Config(int argc, const char *argv[]);
 
         Config(const Config &) = default;
 
@@ -36,9 +38,21 @@ namespace bitrix_tools
     private:
         void parseJson();
 
+        template<typename T>
+        T findJsonStringValueThenMapIt(const std::string &key, const T &def = T(),
+            std::function<T(const std::string&)> f = [](const std::string& v) { return T(v); }) const
+        {
+            auto value = config_json_.find(key);
+            if (value == config_json_.end() || !value.value().is_string())
+            {
+                return def;
+            }
+
+            return f(value.value().get<std::string>());
+        }
+
         std::string app_path_;
-        const JsonParser json_parser_;
-        JsonParser::PropsMap props_;
+        nlohmann::json config_json_;
 
         static const std::string MAIN_CONFIG_FILE_NAME;
         static const std::string BITRIX_TOOLS_JSON_FILE_NAME;

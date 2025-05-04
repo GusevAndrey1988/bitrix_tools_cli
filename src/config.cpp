@@ -1,14 +1,17 @@
 #include "config.h"
+
 #include <iostream>
+#include <fstream>
 #include <filesystem>
 
 namespace bitrix_tools
 {
+    namespace j = nlohmann;
+
     const std::string Config::MAIN_CONFIG_FILE_NAME = "config.json";
     const std::string Config::BITRIX_TOOLS_JSON_FILE_NAME = "bitrix-tools.json";
 
-    Config::Config(int argc, const char *argv[], const JsonParser &json_parser)
-        : json_parser_{json_parser}
+    Config::Config(int argc, const char *argv[])
     {
         app_path_ = argv[0];
     }
@@ -42,7 +45,13 @@ namespace bitrix_tools
 
     void Config::parseJson()
     {
-        props_ = json_parser_.parse(getConfigPath() + MAIN_CONFIG_FILE_NAME);
+        std::ifstream f{getConfigPath() + MAIN_CONFIG_FILE_NAME};
+        if (!f.is_open())
+        {
+            throw std::runtime_error{"Файл настроек не найден"};
+        }
+
+        config_json_ = j::json::parse(f);
     }
 
     std::string Config::getPathToModuleDir(const WorkLocation &location, const std::string &vendor) const
@@ -62,41 +71,24 @@ namespace bitrix_tools
 
     std::string Config::getDefaultVendorName() const
     {
-        auto vendor = props_.find("default_vendor");
-        if (vendor == props_.end())
-        {
-            return "vendor";
-        }
-        return vendor->second;
+        return findJsonStringValueThenMapIt("default_vendor", std::string{"vendor"});
     }
 
     WorkLocation Config::getDefaultModuleLocation() const
     {
-        auto module_location = props_.find("default_module_location");
-        if (module_location == props_.end())
-        {
-            return WorkLocation::LOCAL;
-        }
-        return string_to_work_location(module_location->second);
+        return findJsonStringValueThenMapIt<WorkLocation>("default_module_location", 
+            WorkLocation::LOCAL, string_to_work_location);
     }
 
     WorkLocation Config::getDefaultComponentLocation() const
     {
-        auto module_location = props_.find("default_component_location");
-        if (module_location == props_.end())
-        {
-            return WorkLocation::LOCAL;
-        }
-        return string_to_work_location(module_location->second);
+        return findJsonStringValueThenMapIt<WorkLocation>("default_component_location", 
+            WorkLocation::LOCAL, string_to_work_location);
     }
 
     WorkLocation Config::getDefaultJsExtensionLocation() const
     {
-        auto js_extension_location = props_.find("default_js_extension_location");
-        if (js_extension_location == props_.end())
-        {
-            return WorkLocation::LOCAL;
-        }
-        return string_to_work_location(js_extension_location->second);
+        return findJsonStringValueThenMapIt<WorkLocation>("default_js_extension_location", 
+            WorkLocation::LOCAL, string_to_work_location);
     }
 }
