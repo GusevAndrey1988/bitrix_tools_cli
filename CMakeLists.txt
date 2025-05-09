@@ -5,6 +5,13 @@ set(EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-fPIC)
+endif()
+
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
 
 project(bitrix_tools_cli VERSION 0.0.1)
 
@@ -20,26 +27,15 @@ set(APPLICATION_DIR "${CMAKE_PROJECT_NAME}")
 set(APPLICATION_ETC_DIR "../etc/${APPLICATION_DIR}")
 
 include(FetchContent)
-
-find_package(nlohmann_json 3.11.3 REQUIRED)
-
 FetchContent_Declare(
-    jinja2
-    GIT_REPOSITORY https://github.com/flexferrum/Jinja2Cpp.git
-    GIT_TAG e97a54e51336938470eacb4ce261bde903e22e54 # 1.3.2
+  boost
+  GIT_REPOSITORY https://github.com/boostorg/boost.git
+  GIT_TAG boost-1.86.0
 )
 
-set(BOOST_INCLUDE_LIBRARIES program_options)
-set(BOOST_ENABLE_CMAKE ON)
+FetchContent_MakeAvailable(boost)
 
-FetchContent_Declare(
-    Boost
-    GIT_REPOSITORY https://github.com/boostorg/boost.git
-    GIT_TAG 199ef13d6034c85232431130142159af3adfce22 # boost-1.88.0
-    GIT_SHALLOW TRUE
-)
-
-FetchContent_MakeAvailable(json jinja2 Boost)
+set(BOOST_LIBRARIES program_options)
 
 file(COPY "${PROJECT_SOURCE_DIR}/resources/templates" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${APPLICATION_ETC_DIR}")
 file(COPY "${PROJECT_SOURCE_DIR}/resources/config" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${APPLICATION_ETC_DIR}")
@@ -62,6 +58,12 @@ target_link_libraries(bitrix_tools_cli
     jinja2cpp
     Boost::program_options
 )
+
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(thirdparty/json)
+
+add_subdirectory(thirdparty/jinja2cpp)
+set (JINJA2CPP_INSTALL CACHE BOOL {} FALSE)
 
 install(TARGETS bitrix_tools_cli DESTINATION "opt/bitrix_tools_cli/bin")
 install(DIRECTORY resources/ DESTINATION "opt/bitrix_tools_cli/etc")
