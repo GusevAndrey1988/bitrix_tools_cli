@@ -1,4 +1,4 @@
-project('bitrix_tools_cli', 'cpp', version: '0.0.1', meson_version: '>=0.28.0')
+project('bitrix_tools_cli', 'cpp', version: '0.0.1', meson_version: '>=0.51.0')
 
 conf_data = configuration_data()
 
@@ -16,7 +16,7 @@ cfg_file = configure_file(
 
 include_dir = include_directories('include')
 
-boost_dep = dependency('boost', modules: ['program_options'], required: true)
+boost_dep = dependency('boost', modules: ['program_options'], version: '>=1.75.0', required: true)
 
 nlohmann_json_dep = dependency('nlohmann_json', required: true)
 
@@ -43,7 +43,7 @@ executable(
   sources,
   cfg_file,
   include_directories: [include_dir],
-  dependencies: [boost_dep, nlohmann_json_dep, jinja2cpp_deps, fmt_deps],
+  dependencies: [nlohmann_json_dep, jinja2cpp_deps, boost_dep, fmt_deps],
   cpp_args: '-O',
   install: true,
 )
