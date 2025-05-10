@@ -16,11 +16,12 @@ cfg_file = configure_file(
 
 include_dir = include_directories('include')
 
-boost_dep = dependency('boost', modules: ['program_options'], version: '>=1.75.0', required: true)
+cmake = import('cmake')
+
+boost_proj = cmake.subproject('boost', required: true)
+boost_dep = boost_proj.dependency('boost_program_options')
 
 nlohmann_json_dep = dependency('nlohmann_json', required: true)
-
-cmake = import('cmake')
 
 jinja2cpp_proj = cmake.subproject('jinja2cpp')
 jinja2cpp_deps = jinja2cpp_proj.dependency('jinja2cpp')
@@ -44,7 +45,7 @@ executable(
   cfg_file,
   include_directories: [include_dir],
   dependencies: [nlohmann_json_dep, jinja2cpp_deps, boost_dep, fmt_deps],
-  cpp_args: '-O',
+  cpp_args: ['--std=c++17', '-O'],
   install: true,
 )
 

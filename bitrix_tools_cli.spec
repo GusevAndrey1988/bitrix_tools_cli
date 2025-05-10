@@ -15,7 +15,7 @@ rm -rf builddir && mkdir builddir
 
 %build
 pushd builddir
-  meson setup ..
+  meson setup --buildtype release ..
   meson compile
 popd
 

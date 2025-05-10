@@ -5,13 +5,9 @@ let
 in
 pkgs.mkShell {
     buildInputs = with pkgs; [
-        boost186
     ];
 
     nativeBuildInputs = with pkgs; [
         pkg-config
     ];
-
-    BOOST_INCLUDEDIR = "${lib.getDev pkgs.boost186}/include";
-    BOOST_LIBRARYDIR = "${lib.getLib pkgs.boost186}/lib";
 }
