@@ -13,7 +13,7 @@ namespace bitrix_tools
         template_file_.open(path_to_template);
         if (!template_file_.is_open())
         {
-            throw std::runtime_error{"Файл шаблона не найден"};
+            throw std::runtime_error{"Файл шаблона не найден: " + path_to_template};
         }
     }
 
