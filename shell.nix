@@ -4,10 +4,8 @@ let
 in
 pkgs.mkShell {
     buildInputs = with pkgs; [
-        openssl
     ];
 
     nativeBuildInputs = with pkgs; [
-        pkg-config
     ];
 }
