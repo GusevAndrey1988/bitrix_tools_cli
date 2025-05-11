@@ -23,5 +23,3 @@ popd
 pushd build
   DESTDIR=%{buildroot} meson install
 popd
-
-%changelog
