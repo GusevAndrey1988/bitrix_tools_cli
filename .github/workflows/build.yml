@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Fetch sources
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
       - name: Install python
         run: yum install -y python pip
