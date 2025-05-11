@@ -55,6 +55,7 @@ executable(
 )
 
 
+
 gtest_proj = subproject('gtest')
 gtest_deps = gtest_proj.get_variable('gtest_dep')
 
@@ -62,8 +63,8 @@ test_conf_data = configuration_data()
 test_conf_data.set('APPLICATION_ETC_DIR', '../resources')
 test_cfg_file = configure_file(
   input: 'include/variables.h.in',
-  output: 'variables.h',
-  configuration: conf_data,
+  output: 'variables_test.h',
+  configuration: test_conf_data,
 )
 
 executable(
@@ -80,8 +81,10 @@ executable(
     fmt_deps,
     gtest_deps,
   ],
-  cpp_args: ['--std=c++17', '-O'],
+  cpp_args: ['--std=c++17', '-O', '-D TEST_RUN'],
 )
+
+
 
 install_subdir('resources/config', install_dir: 'etc/bitrix_tools_cli')
 install_subdir('resources/templates', install_dir: 'etc/bitrix_tools_cli')

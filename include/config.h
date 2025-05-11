@@ -8,7 +8,7 @@
 
 #include "work_location.h"
 
-#include "variables.h"
+#include "settings.h"
 
 namespace bitrix_tools
 {
