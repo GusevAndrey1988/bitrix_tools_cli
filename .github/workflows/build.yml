@@ -7,6 +7,9 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+      - name: Install git
+        run: yum install -y git
+        
       - name: Fetch sources
         uses: actions/checkout@v3
         with:
