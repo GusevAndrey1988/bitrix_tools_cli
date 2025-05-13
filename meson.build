@@ -69,8 +69,11 @@ test_cfg_file = configure_file(
 
 executable(
   'run_test',
+  'test/tools/tools.h',
+  'test/tools/tools.cpp',
   'test/run_test.cpp',
   'test/config_test.cpp',
+  'test/init_command_test.cpp',
   sources,
   test_cfg_file,
   include_directories: [include_dir],
