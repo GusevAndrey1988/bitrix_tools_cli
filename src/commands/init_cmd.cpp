@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "template.h"
-#include "config_to_template_properties_mapper.h"
+#include "config_property_mapper.h"
 
 namespace bitrix_tools
 {
@@ -17,8 +17,8 @@ namespace bitrix_tools
 
         const std::string path_to_tpl = cfg.getTemplatesPath() + cfg.getBitrixToolsJsonFileName() + ".j2";
 
-        TemplatePropertyValue::TemplatePropertyValueMapPtr vm = ConfigToTemplatePropertiesMapper::map(cfg);
-        Template tpl{path_to_tpl, vm};
+        ConfigPropertyMapper props{cfg};
+        Template tpl{path_to_tpl, props.get()};
 
         if (tpl.saveTo(cfg.getRootPath() + cfg.getBitrixToolsJsonFileName()))
         {

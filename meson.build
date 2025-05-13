@@ -30,7 +30,7 @@ fmt_deps = jinja2cpp_proj.dependency('fmt')
 sources = [
   'src/application.cpp',
   'src/command.cpp',
-  'src/config_to_template_properties_mapper.cpp',
+  'src/config_property_mapper.cpp',
   'src/config.cpp',
   'src/template_property_value.cpp',
   'src/template.cpp',
