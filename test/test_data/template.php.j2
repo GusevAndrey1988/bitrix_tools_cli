@@ -1,0 +1,15 @@
+<?php
+
+require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php';
+
+$message = '{{ [prop1, prop2]|join(" ") }}';
+?>
+<h1><?=$message?></h1>
+<div>{{ listProp1|join("-")|upper }}</div>
+<ul>
+    <li>{{ mapProp1.key1 }}</li>
+    <li>{{ mapProp1.key2 }}</li>
+    <li>{{ mapProp1.key3 }}</li>
+</ul>
+<?
+require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php';
