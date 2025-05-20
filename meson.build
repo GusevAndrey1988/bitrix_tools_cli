@@ -29,12 +29,13 @@ fmt_deps = jinja2cpp_proj.dependency('fmt')
 
 sources = [
   'src/application.cpp',
-  'src/command.cpp',
   'src/config_property_mapper.cpp',
   'src/config.cpp',
   'src/template_property_value.cpp',
   'src/template.cpp',
   'src/work_location.cpp',
+  'src/json_reader.cpp',
+  'src/command.cpp',
   'src/commands/init_cmd.cpp',
 ]
 
@@ -75,6 +76,7 @@ executable(
   'test/config_test.cpp',
   'test/init_command_test.cpp',
   'test/template_test.cpp',
+  'test/json_test.cpp',
   sources,
   test_cfg_file,
   include_directories: [include_dir],

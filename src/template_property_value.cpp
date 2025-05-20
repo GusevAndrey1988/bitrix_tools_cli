@@ -2,6 +2,10 @@
 
 namespace bitrix_tools
 {
+    TemplatePropertyValue::TemplatePropertyValue(EmptyValue value) : value_{value}
+    {
+    }
+
     TemplatePropertyValue::TemplatePropertyValue(bool value) : value_{value}
     {
     }
@@ -91,5 +95,10 @@ namespace bitrix_tools
     TemplatePropertyValueListPtr TemplatePropertyValue::asList() const
     {
         return std::get<TemplatePropertyValueListPtr>(value_);
+    }
+
+    bool TemplatePropertyValue::hasSameType(const TemplatePropertyValue &other) const
+    {
+        return value_.index() == other.value_.index();
     }
 }

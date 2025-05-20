@@ -9,7 +9,7 @@
 namespace bitrix_tools
 {
     class TemplatePropertyValue;
-    
+
     using TemplatePropertyValueMap = std::unordered_map<std::string, TemplatePropertyValue>;
     using TemplatePropertyValueMapPtr = std::shared_ptr<TemplatePropertyValueMap>;
 
@@ -30,6 +30,8 @@ namespace bitrix_tools
             TemplatePropertyValueMapPtr,
             TemplatePropertyValueListPtr
         >;
+
+        TemplatePropertyValue(EmptyValue value);
 
         TemplatePropertyValue(bool value);
 
@@ -62,6 +64,8 @@ namespace bitrix_tools
 
         bool isList() const;
         TemplatePropertyValueListPtr asList() const;
+
+        bool hasSameType(const TemplatePropertyValue &other) const;
 
     private:
         ValueData value_;

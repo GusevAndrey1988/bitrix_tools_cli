@@ -1,0 +1,21 @@
+{
+    "null": null,
+    "int": 12,
+    "double": 12.12,
+    "string": "hello",
+    "arr": [
+        1,
+        1.1,
+        "hello",
+        [ 1, 2, 3 ],
+        { "a": 1, "b": 2 }
+    ],
+    "obj": {
+        "obj": {
+            "a": "hello",
+            "b": "world"
+        },
+        "arr": [1, 2, 3],
+        "double": 100.100
+    }
+}
