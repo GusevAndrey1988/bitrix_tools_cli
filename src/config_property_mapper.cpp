@@ -3,7 +3,7 @@
 namespace bitrix_tools
 {
     ConfigPropertyMapper::ConfigPropertyMapper(const Config &config):
-        value_map_{new TemplatePropertyValue::TemplatePropertyValueMap{}}
+        value_map_{new TemplatePropertyValueMap{}}
     {
         value_map_->insert({"default_vendor", config.getDefaultVendorName()});
         value_map_->insert({"default_module_location", work_location_to_string(config.getDefaultModuleLocation())});
@@ -11,7 +11,7 @@ namespace bitrix_tools
         value_map_->insert({"default_js_extension_location", work_location_to_string(config.getDefaultJsExtensionLocation())});
     }
 
-    const TemplatePropertyValue::TemplatePropertyValueMapPtr ConfigPropertyMapper::get() const
+    const TemplatePropertyValueMapPtr ConfigPropertyMapper::get() const
     {
         return value_map_;
     }

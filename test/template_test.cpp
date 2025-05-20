@@ -9,23 +9,22 @@
 TEST(TemplateTest, BaseTest)
 {
     using namespace bitrix_tools;
-    using tpv = TemplatePropertyValue;
 
-    tpv::TemplatePropertyValueMapPtr props{new tpv::TemplatePropertyValueMap{}};
+    TemplatePropertyValueMapPtr props{new TemplatePropertyValueMap{}};
 
     props->insert({
         {"prop1", std::string{"Hello"}},
         {"prop2", std::string{"World"}},
     });
 
-    tpv::TemplatePropertyValueListPtr listProp1Value{new tpv::TemplatePropertyValueList{{
+    TemplatePropertyValueListPtr listProp1Value{new TemplatePropertyValueList{{
         std::string{"One"},
         std::string{"Two"},
         std::string{"Three"},
     }}};
     props->insert({"listProp1", listProp1Value});
 
-    tpv::TemplatePropertyValueMapPtr mapProp1Value{new tpv::TemplatePropertyValueMap{}};
+    TemplatePropertyValueMapPtr mapProp1Value{new TemplatePropertyValueMap{}};
     mapProp1Value->insert({
         {"key1", std::string{"one"}},
         {"key2", std::string{"two"}},

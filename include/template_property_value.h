@@ -8,16 +8,17 @@
 
 namespace bitrix_tools
 {
+    class TemplatePropertyValue;
+    
+    using TemplatePropertyValueMap = std::unordered_map<std::string, TemplatePropertyValue>;
+    using TemplatePropertyValueMapPtr = std::shared_ptr<TemplatePropertyValueMap>;
+
+    using TemplatePropertyValueList = std::vector<TemplatePropertyValue>;
+    using TemplatePropertyValueListPtr = std::shared_ptr<TemplatePropertyValueList>;
+
     class TemplatePropertyValue
     {
     public:
-        using TemplatePropertyValueMap = std::unordered_map<std::string, TemplatePropertyValue>;
-        using TemplatePropertyValueMapPtr = std::shared_ptr<TemplatePropertyValueMap>;
-
-        using TemplatePropertyValueList = std::vector<TemplatePropertyValue>;
-        using TemplatePropertyValueListPtr = std::shared_ptr<TemplatePropertyValueList>;
-
-
         struct EmptyValue {};
 
         using ValueData = std::variant<

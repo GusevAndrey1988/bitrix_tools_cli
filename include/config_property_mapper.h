@@ -13,9 +13,9 @@ namespace bitrix_tools
         ConfigPropertyMapper(const ConfigPropertyMapper &) = delete;
         ConfigPropertyMapper& operator=(const ConfigPropertyMapper &) = delete;
 
-        const TemplatePropertyValue::TemplatePropertyValueMapPtr get() const;
+        const TemplatePropertyValueMapPtr get() const;
 
     private:
-        TemplatePropertyValue::TemplatePropertyValueMapPtr value_map_;
+        TemplatePropertyValueMapPtr value_map_;
     };
 }
