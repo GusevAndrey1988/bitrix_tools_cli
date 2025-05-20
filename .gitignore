@@ -23,4 +23,7 @@ packagecache
 /docs/built_docs
 /docs/hotdoc-private*
 
+/.lsp
+/.clj-kondo
+
 todo.txt
